@@ -64,9 +64,14 @@ export default function HomeScreen() {
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}>
           <View style={styles.headerContent}>
-            <View>
-              <Text style={styles.greeting}>Good morning! 👋</Text>
-              <Text style={styles.headerTitle}>Butterfly Platform</Text>
+            <View style={styles.headerLeft}>
+              <View style={styles.logoContainer}>
+                <Text style={styles.logoText}>🦋</Text>
+              </View>
+              <View>
+                <Text style={styles.greeting}>Good morning! 👋</Text>
+                <Text style={styles.headerTitle}>Butterfly Platform</Text>
+              </View>
             </View>
             <TouchableOpacity style={styles.linkedinBadge}>
               <Linkedin size={20} color="#FFFFFF" />
@@ -154,6 +159,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  headerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  logoContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logoText: {
+    fontSize: 24,
   },
   greeting: {
     color: '#FFFFFF',

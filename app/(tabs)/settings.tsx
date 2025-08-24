@@ -46,7 +46,12 @@ export default function SettingsScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Settings</Text>
+        <View style={styles.headerContent}>
+          <View style={styles.logoContainer}>
+            <Text style={styles.logoText}>🦋</Text>
+          </View>
+          <Text style={styles.headerTitle}>Settings</Text>
+        </View>
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -207,6 +212,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderBottomWidth: 1,
     borderBottomColor: '#E2E8F0',
+  },
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  logoContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#0077B5',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logoText: {
+    fontSize: 20,
   },
   headerTitle: {
     fontSize: 20,

@@ -1,6 +1,7 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, View, ActivityIndicator, Alert } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, View, ActivityIndicator, Alert, Platform } from 'react-native';
 import { useGoogleAuth } from '../hooks/useGoogleAuth';
+import { GoogleSignInWeb } from './GoogleSignInWeb';
 
 interface GoogleSignInButtonProps {
   onSuccess?: (result: any) => void;
@@ -25,6 +26,17 @@ export function GoogleSignInButton({
       Alert.alert('Authentication Error', errorMessage);
     }
   };
+
+  // Use web-specific component for web platform
+  if (Platform.OS === 'web') {
+    return (
+      <GoogleSignInWeb
+        onSuccess={onSuccess}
+        onError={onError}
+        text={text}
+      />
+    );
+  }
   return (
     <TouchableOpacity
       style={[styles.googleButton, isLoading && styles.disabledButton]}

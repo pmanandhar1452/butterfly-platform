@@ -61,7 +61,12 @@ export default function ComposeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Compose Post</Text>
+        <View style={styles.headerLeft}>
+          <View style={styles.logoContainer}>
+            <Text style={styles.logoText}>🦋</Text>
+          </View>
+          <Text style={styles.headerTitle}>Compose Post</Text>
+        </View>
         <TouchableOpacity style={styles.publishButton} onPress={handlePublish}>
           <Send size={16} color="#FFFFFF" />
           <Text style={styles.publishText}>Publish</Text>

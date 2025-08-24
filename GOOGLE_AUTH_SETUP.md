@@ -36,8 +36,9 @@ GOOGLE_CLIENT_SECRET=your_client_secret_here
 
 ### Web
 - Add your redirect URI to the Web OAuth client in Google Cloud Console
-- For development: `myapp://` (uses the app scheme)
+- For development: `http://localhost:8081` (or your local development URL)
 - For production: `https://your-domain.com`
+- Make sure to enable the Google Identity Services API in Google Cloud Console
 
 ## 4. Usage
 
@@ -70,10 +71,13 @@ function LoginScreen() {
 
 - Make sure all environment variables are properly set
 - Verify that your OAuth client IDs are correct for each platform
-- Check that your redirect URIs match exactly: `myapp://` (uses the app scheme)
+- Check that your redirect URIs match exactly:
+  - Mobile: `myapp://` (uses the app scheme)
+  - Web: `http://localhost:8081` (development) or your production domain
 - Ensure you have the required packages installed: `expo-auth-session` and `expo-crypto`
 - If the web browser keeps loading, check the console logs for debugging information
-- Make sure your Google Cloud Console OAuth client has the correct redirect URI: `myapp://`
+- Make sure your Google Cloud Console OAuth client has the correct redirect URI
+- For web: Ensure Google Identity Services API is enabled in Google Cloud Console
 
 ## 6. Testing
 

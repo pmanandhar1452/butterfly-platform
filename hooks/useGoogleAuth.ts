@@ -4,6 +4,7 @@ import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
 import { Platform } from 'react-native';
 
+
 // Complete the auth session
 WebBrowser.maybeCompleteAuthSession();
 
@@ -16,8 +17,13 @@ interface GoogleAuthConfig {
   googleClientSecret: string;
 }
 
-// Use the app scheme for redirect URI
+// Get the appropriate redirect URI based on platform
 const getRedirectUri = () => {
+  if (Platform.OS === 'web') {
+    // For web, use the current origin
+    return typeof window !== 'undefined' ? window.location.origin : 'http://localhost:8081';
+  }
+  // For mobile, use the app scheme
   const scheme = Constants.expoConfig?.scheme || 'myapp';
   return `${scheme}://`;
 };
@@ -28,17 +34,34 @@ export function useGoogleAuth() {
 
   const config = Constants.expoConfig?.extra as GoogleAuthConfig;
   
+  // Debug logging
+  console.log('🔍 useGoogleAuth Debug:');
+  console.log('Platform:', Platform.OS);
+  console.log('Config:', config);
+  console.log('Config extra:', Constants.expoConfig?.extra);
+  console.log('Environment variables:', {
+    GOOGLE_CLIENT_ID_WEB: process.env.GOOGLE_CLIENT_ID_WEB,
+    GOOGLE_CLIENT_ID_IOS: process.env.GOOGLE_CLIENT_ID_IOS,
+    GOOGLE_CLIENT_ID_ANDROID: process.env.GOOGLE_CLIENT_ID_ANDROID,
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET ? '✅ Set' : '❌ Not set',
+  });
+  
   const getClientId = () => {
-    switch (Platform.OS) {
-      case 'ios':
-        return config?.googleClientId?.ios;
-      case 'android':
-        return config?.googleClientId?.android;
-      case 'web':
-        return config?.googleClientId?.web;
-      default:
-        return config?.googleClientId?.web;
-    }
+    const clientId = (() => {
+      switch (Platform.OS) {
+        case 'ios':
+          return process.env.GOOGLE_CLIENT_ID_IOS || config?.googleClientId?.ios;
+        case 'android':
+          return process.env.GOOGLE_CLIENT_ID_ANDROID || config?.googleClientId?.android;
+        case 'web':
+          return process.env.GOOGLE_CLIENT_ID_WEB || config?.googleClientId?.web;
+        default:
+          return process.env.GOOGLE_CLIENT_ID_WEB || config?.googleClientId?.web;
+      }
+    })();
+    
+    console.log('🔍 getClientId result:', clientId);
+    return clientId;
   };
 
   const signInWithGoogle = async () => {
@@ -55,6 +78,7 @@ export function useGoogleAuth() {
 
       console.log('Using client ID:', clientId);
       console.log('Using redirect URI:', redirectUri);
+      console.log('Platform:', Platform.OS);
 
       // Create the auth request
       const request = new AuthSession.AuthRequest({

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { GoogleAuthDebug } from '../components/GoogleAuthDebug';
 
 export default function TestScreen() {
   return (
@@ -9,6 +10,8 @@ export default function TestScreen() {
       <Text style={styles.description}>
         If you can see this page, the basic routing and rendering is working correctly.
       </Text>
+      
+      <GoogleAuthDebug />
     </View>
   );
 }
