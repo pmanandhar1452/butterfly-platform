@@ -16,7 +16,8 @@ Each contributor licenses you to do everything with this software that would oth
 
 Notices
 
-You must ensure that everyone who gets a copy of any part of this software from you, with or without changes, also gets the text of this license or a link to <https://github.com/n8n-io/n8n/blob/master/LICENSE.md>.
+You must ensure that everyone who gets a copy of any part of this software from you, with or without changes, also gets the text of this license or a link to 
+[https://github.com/pmanandhar1452/butterfly-platform/blob/main/LICENSE.md](https://github.com/pmanandhar1452/butterfly-platform/blob/main/LICENSE.md).
 
 Excuse
 
