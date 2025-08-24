@@ -13,7 +13,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Link, router } from 'expo-router';
-import { Mail, Lock, Eye, EyeOff } from 'lucide-react-native';
+import { Mail, Lock, Eye, EyeOff, Sparkles } from 'lucide-react-native';
 import { GoogleSignInButton } from '@/components/GoogleSignInButton';
 
 export default function LoginScreen() {
@@ -52,6 +52,16 @@ export default function LoginScreen() {
     }
   };
 
+  const handleGoogleSuccess = (result: any) => {
+    console.log('Google sign-in successful:', result);
+    router.replace('/(tabs)');
+  };
+
+  const handleGoogleError = (error: string) => {
+    console.error('Google sign-in failed:', error);
+    Alert.alert('Authentication Error', error);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
@@ -69,21 +79,33 @@ export default function LoginScreen() {
                 <Text style={styles.logoText}>🦋</Text>
               </View>
               <Text style={styles.brandName}>Butterfly Platform</Text>
-              <Text style={styles.tagline}>AI-Powered LinkedIn Automation</Text>
+              <Text style={styles.tagline}>AI-Powered LinkedIn Growth</Text>
             </View>
           </LinearGradient>
 
           {/* Login Form */}
           <View style={styles.formContainer}>
-            <Text style={styles.welcomeText}>Welcome Back</Text>
-            <Text style={styles.subtitleText}>Sign in to continue your journey</Text>
+            <Text style={styles.welcomeText}>Welcome to Butterfly</Text>
+            <Text style={styles.subtitleText}>Grow your LinkedIn presence with AI</Text>
+
+            {/* App Description */}
+            <View style={styles.descriptionContainer}>
+              <Sparkles size={20} color="#0077B5" style={styles.descriptionIcon} />
+              <Text style={styles.descriptionText}>
+                Automate your LinkedIn outreach, create engaging content, and build meaningful connections with AI assistance.
+              </Text>
+            </View>
 
             {/* Google Sign In */}
-            <GoogleSignInButton onPress={handleGoogleSignIn} isLoading={isLoading} />
+            <GoogleSignInButton 
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
+              text="Continue with Google"
+            />
 
             <View style={styles.divider}>
               <View style={styles.dividerLine} />
-              <Text style={styles.dividerText}>or continue with email</Text>
+              <Text style={styles.dividerText}>or sign in with email</Text>
               <View style={styles.dividerLine} />
             </View>
 
@@ -210,7 +232,26 @@ const styles = StyleSheet.create({
   subtitleText: {
     fontSize: 16,
     color: '#64748B',
+    marginBottom: 24,
+  },
+  descriptionContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#F1F5F9',
+    borderRadius: 12,
+    padding: 16,
     marginBottom: 32,
+    borderLeftWidth: 4,
+    borderLeftColor: '#0077B5',
+  },
+  descriptionIcon: {
+    marginRight: 12,
+    marginTop: 2,
+  },
+  descriptionText: {
+    flex: 1,
+    fontSize: 14,
+    color: '#475569',
+    lineHeight: 20,
   },
   divider: {
     flexDirection: 'row',

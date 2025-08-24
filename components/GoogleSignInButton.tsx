@@ -1,21 +1,34 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, View, ActivityIndicator } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, View, ActivityIndicator, Alert } from 'react-native';
+import { useGoogleAuth } from '../hooks/useGoogleAuth';
 
 interface GoogleSignInButtonProps {
-  onPress: () => void;
-  isLoading?: boolean;
+  onSuccess?: (result: any) => void;
+  onError?: (error: string) => void;
   text?: string;
 }
 
 export function GoogleSignInButton({ 
-  onPress, 
-  isLoading = false, 
+  onSuccess,
+  onError,
   text = "Continue with Google" 
 }: GoogleSignInButtonProps) {
+  const { signInWithGoogle, isLoading, error } = useGoogleAuth();
+
+  const handlePress = async () => {
+    try {
+      const result = await signInWithGoogle();
+      onSuccess?.(result);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Authentication failed';
+      onError?.(errorMessage);
+      Alert.alert('Authentication Error', errorMessage);
+    }
+  };
   return (
     <TouchableOpacity
       style={[styles.googleButton, isLoading && styles.disabledButton]}
-      onPress={onPress}
+      onPress={handlePress}
       disabled={isLoading}>
       <View style={styles.googleButtonContent}>
         {isLoading ? (

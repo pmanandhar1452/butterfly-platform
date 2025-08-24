@@ -13,7 +13,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Link, router } from 'expo-router';
-import { Mail, Lock, User, Eye, EyeOff } from 'lucide-react-native';
+import { Mail, Lock, User, Eye, EyeOff, Sparkles } from 'lucide-react-native';
 import { GoogleSignInButton } from '@/components/GoogleSignInButton';
 
 export default function RegisterScreen() {
@@ -65,6 +65,16 @@ export default function RegisterScreen() {
     }
   };
 
+  const handleGoogleSuccess = (result: any) => {
+    console.log('Google sign-up successful:', result);
+    router.replace('/(tabs)');
+  };
+
+  const handleGoogleError = (error: string) => {
+    console.error('Google sign-up failed:', error);
+    Alert.alert('Authentication Error', error);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
@@ -89,12 +99,20 @@ export default function RegisterScreen() {
           {/* Registration Form */}
           <View style={styles.formContainer}>
             <Text style={styles.welcomeText}>Create Account</Text>
-            <Text style={styles.subtitleText}>Get started with your free account</Text>
+            <Text style={styles.subtitleText}>Join Butterfly and grow your LinkedIn presence</Text>
+
+            {/* App Description */}
+            <View style={styles.descriptionContainer}>
+              <Sparkles size={20} color="#8B5CF6" style={styles.descriptionIcon} />
+              <Text style={styles.descriptionText}>
+                Automate your LinkedIn outreach, create engaging content, and build meaningful connections with AI assistance.
+              </Text>
+            </View>
 
             {/* Google Sign Up */}
             <GoogleSignInButton 
-              onPress={handleGoogleSignUp} 
-              isLoading={isLoading}
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
               text="Sign up with Google"
             />
 
@@ -264,7 +282,26 @@ const styles = StyleSheet.create({
   subtitleText: {
     fontSize: 16,
     color: '#64748B',
+    marginBottom: 24,
+  },
+  descriptionContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#F1F5F9',
+    borderRadius: 12,
+    padding: 16,
     marginBottom: 32,
+    borderLeftWidth: 4,
+    borderLeftColor: '#8B5CF6',
+  },
+  descriptionIcon: {
+    marginRight: 12,
+    marginTop: 2,
+  },
+  descriptionText: {
+    flex: 1,
+    fontSize: 14,
+    color: '#475569',
+    lineHeight: 20,
   },
   divider: {
     flexDirection: 'row',
